@@ -40,6 +40,8 @@ public class record {
 		this.indivCity.increaseZ(z);
 	}
 	
-	
-
+	public void printStock(){
+		int [] stock = this.indivCity.getItemStock();
+		System.out.println(this.cityName + ": " + stock[0] + " " + stock[1] + " " + stock[2]);
+	}
 }

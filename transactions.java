@@ -32,7 +32,22 @@ public class transactions {
 		}
 	}
 	
-	
+	public static void borrow(String type, record NewYork, record Miami, record LosAngeles, record Chicago, record Houston){
+		
+		warehouse city;
+		if (type.equals("X"))
+			//add ths later
+		city = NewYork.getIndivCity();
+		int ny = city.getItemStock()[0];
+		city = Miami.getIndivCity();
+		int miami = city.getItemStock()[0];
+		city = LosAngeles.getIndivCity();
+		int losangeles = city.getItemStock()[0];
+		city = Chicago.getIndivCity();
+		int chicago = city.getItemStock()[0];
+		city = Houston.getIndivCity();
+		int houston = city.getItemStock()[0];
+	}
 	public static void readOrder(String city, int x, int y, int z){
 		
 	}
@@ -111,13 +126,6 @@ public class transactions {
 					  System.out.println(priceX);
 					  //Read in the initial stocks of the items in the warehouses
 					  initializeWarehouses(reader,NewYork, Miami, LosAngeles, Houston, Chicago);
-					  System.out.println(NewYork.getIndivCity().getItemStock()[1]);
-					  System.out.println(Chicago.getIndivCity().getItemStock()[1]);
-					  System.out.println(Houston.getIndivCity().getItemStock()[1]);					  
-					  System.out.println(Miami.toString());
-					  System.out.println(LosAngeles.toString());
-					  System.out.println(Houston.toString());
-					  System.out.println("**********************************************************");
 					  
 					  String cityname;
 					  String typeOfTransaction;
@@ -148,11 +156,12 @@ public class transactions {
 				   System.out.println("Error, could not open the file!");
 			   }
 			
-			System.out.println("Hello there");
-			System.out.println(NewYork.getIndivCity().getItemStock()[1]);
-			System.out.println(Chicago.getIndivCity().getItemStock()[1]);
-			System.out.println(Houston.getIndivCity().getItemStock()[1]);
-			System.out.println(Miami.getIndivCity().getItemStock()[1]);
-			System.out.println(LosAngeles.getIndivCity().getItemStock()[1]);
+			System.out.println("Final numbers for: ");
+			
+			NewYork.printStock();
+			Miami.printStock();
+			LosAngeles.printStock();
+			Chicago.printStock();
+			Houston.printStock();
 		}
 }
