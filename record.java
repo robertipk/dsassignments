@@ -33,6 +33,13 @@ public class record {
 		this.cityName = cityName;
 	}
 	
+	public void increaseStock(int x, int y, int z){
+		System.out.println("Shipment being sent to " + this.cityName);
+		this.indivCity.increaseX(x);
+		this.indivCity.increaseY(y);
+		this.indivCity.increaseZ(z);
+	}
+	
 	
 
 }
