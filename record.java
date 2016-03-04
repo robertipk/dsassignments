@@ -7,7 +7,7 @@ public class record {
 	
 	public record() {
 		this.indivCity = new warehouse(0,0,0);
-		this.cityName = "Some city";
+		this.cityName = "Some city"; //rename cityName to warehouse
 	}
 	
 	public record(String cityName) {
