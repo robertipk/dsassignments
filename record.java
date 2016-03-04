@@ -18,6 +18,11 @@ public class record {
 	public warehouse getIndivCity() {
 		return indivCity;
 	}
+
+	public String toString() {
+		return "record [indivCity=" + indivCity + ", cityName=" + cityName + "]";
+	}
+
 	public void setIndivCity(warehouse indivCity) {
 		this.indivCity = indivCity;
 	}

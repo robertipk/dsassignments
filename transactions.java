@@ -65,11 +65,6 @@ public class transactions {
 				cities[i].setCityName(cityname);				
 				cities[i].getIndivCity().setItemStock(arrayStock);		
 			}
-			
-			
-			
-			//String [] arr = thisLine.split(" ");
-			
 		}
 		catch(IOException e){
 			   System.out.println("Error in reading string!");
@@ -118,23 +113,20 @@ public class transactions {
 					  System.out.println(priceX);
 					  
 					  initializeWarehouses(reader,NewYork, Miami, LosAngeles, Houston, Chicago);
+					  System.out.println(NewYork.getIndivCity().getItemStock()[1]);
+					  System.out.println(Chicago.getIndivCity().getItemStock()[1]);
+					  System.out.println(Houston.getIndivCity().getItemStock()[1]);
+					  
+					  System.out.println(Miami.toString());
+					  System.out.println(LosAngeles.toString());
+					  System.out.println(Houston.toString());
+					  System.out.println(Chicago.toString());
 					  
 
 			}
 			catch(IOException e){
 				   System.out.println("Error, could not open the file!");
 			   }
-			
-			
-			record [] cities = new record[5];
-			cities[0]= new record("New York");
-			cities[1]= new record("Los Angeles");
-			cities[2]= new record("Miami");
-			cities[3]= new record("Houston");
-			cities[4]= new record("Chicago");
-			
-					
-					
 			
 			System.out.println("Hello there");
 			
