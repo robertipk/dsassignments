@@ -48,19 +48,22 @@ public class transactions {
 			record [] cities = {NewYork,Miami,LosAngeles,Houston,Chicago};
 			String thisLine;
 			String cityname;
-			String [] arr;
+			String [] numberArr;
+			String numbers;
 			
 			for(int i=0;i<5;i++)
 			{
 				
 				thisLine = reader.readLine();
+				//find name of city
 				cityname = thisLine.substring(1).replaceAll("[^A-Za-z]+", "");
-				System.out.println(cityname);	
-				thisLine = thisLine.replaceAll("[^-?0-9]+", " ");
-				arr = thisLine.split(" ");
-				cities[i].setCityName(cityname);
-				cities[i].set
-			
+				//find the three numbers
+				numbers = thisLine.replaceAll("[^-?0-9]+", " ");
+				numberArr = numbers.split(" ");
+				int [] arrayStock = {Integer.parseInt(numberArr[1]),Integer.parseInt(numberArr[2]),Integer.parseInt(numberArr[3])};
+				//create warehouse
+				cities[i].setCityName(cityname);				
+				cities[i].getIndivCity().setItemStock(arrayStock);		
 			}
 			
 			

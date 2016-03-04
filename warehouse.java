@@ -14,6 +14,14 @@ public class warehouse {
 		this.itemStock[0] += shipment;
 	}
 	
+	public int[] getItemStock() {
+		return itemStock;
+	}
+
+	public void setItemStock(int[] stockArray) {
+		this.itemStock = stockArray;
+	}
+
 	public void increaseY(int shipment){
 		this.itemStock[1] += shipment;
 	}

@@ -11,7 +11,7 @@ public class record {
 	}
 	
 	public record(String cityName) {
-		System.out.println("Record constructor called");
+		//System.out.println("Record constructor called");
 		this.indivCity = new warehouse(0,0,0);
 		this.cityName = cityName;
 	}
