@@ -32,22 +32,53 @@ public class transactions {
 		}
 	}
 	
-	public static void borrow(String type, record NewYork, record Miami, record LosAngeles, record Chicago, record Houston){
+	public static void borrow(String type, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
 		
 		warehouse city;
+		int num;
 		if (type.equals("X"))
-			//add ths later
-		city = NewYork.getIndivCity();
-		int ny = city.getItemStock()[0];
-		city = Miami.getIndivCity();
-		int miami = city.getItemStock()[0];
-		city = LosAngeles.getIndivCity();
-		int losangeles = city.getItemStock()[0];
-		city = Chicago.getIndivCity();
-		int chicago = city.getItemStock()[0];
-		city = Houston.getIndivCity();
-		int houston = city.getItemStock()[0];
+			num = 0;
+		else if (type.equals("Y"))
+			num = 1;
+		else  //if type equals Z
+			num = 2;
+		
+		int ny = NewYork.getIndivCity().getItemStock()[num];
+		int chicago = Chicago.getIndivCity().getItemStock()[num];
+		int miami = Miami.getIndivCity().getItemStock()[num];
+		int losangeles = LosAngeles.getIndivCity().getItemStock()[num];
+		int houston = Houston.getIndivCity().getItemStock()[num];
+		System.out.println("fgegedg" + ny + " " + chicago+miami+losangeles+houston);
+		
+		//two passes of bubble sort to find the two warehouses with the highest stocks
+		record [] arr = {NewYork,Miami,LosAngeles,Houston,Chicago};
+		
+
 	}
+	
+	public static int [] findTwoHighest(int index, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
+		record [] allStocks = {NewYork, Miami, LosAngeles, Houston, Chicago};
+		
+		int high1 = Integer.MIN_VALUE;
+		record highest = new record ();
+		record secondhighest = new record();
+		int high2 = Integer.MIN_VALUE;
+		for (record city : allStocks) {
+		      if (city.getIndivCity().getItemStock()[index] > high1) {
+		        high2 = high1;
+		        secondhighest = highest;
+		        high1 = city.getIndivCity().getItemStock()[index];
+		        highest = city;
+		      } else if (city.getIndivCity().getItemStock()[index] > high2) {
+		        high2 = city.getIndivCity().getItemStock()[index];
+		        secondhighest = city;
+		      }
+		    }
+		int [] array = {high1,high2};
+		System.out.println("high1 is " + high1 + " high2 is " + high2);
+		return array;
+	}
+	
 	public static void readOrder(String city, int x, int y, int z){
 		
 	}
@@ -75,7 +106,8 @@ public class transactions {
 				int [] arrayStock = {Integer.parseInt(numberArr[1]),Integer.parseInt(numberArr[2]),Integer.parseInt(numberArr[3])};
 				//create warehouse
 				cities[i].setCityName(cityname);				
-				cities[i].getIndivCity().setItemStock(arrayStock);		
+				cities[i].getIndivCity().setItemStock(arrayStock);	
+				//System.out.print(cityname);
 			}
 		}
 		catch(IOException e){
@@ -126,7 +158,8 @@ public class transactions {
 					  System.out.println(priceX);
 					  //Read in the initial stocks of the items in the warehouses
 					  initializeWarehouses(reader,NewYork, Miami, LosAngeles, Houston, Chicago);
-					  
+					  int [] twohighest = findTwoHighest(2,NewYork, Miami, LosAngeles, Houston, Chicago);
+					  borrow("Z",NewYork, Miami, LosAngeles, Houston, Chicago);
 					  String cityname;
 					  String typeOfTransaction;
 					  String numbers;
@@ -163,5 +196,6 @@ public class transactions {
 			LosAngeles.printStock();
 			Chicago.printStock();
 			Houston.printStock();
+			
 		}
 }
