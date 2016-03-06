@@ -9,7 +9,7 @@ import java.lang.String;
 public class transactions {
 	private static float priceX, priceY, priceZ;
 	
-	public static void shipItems(String location, int x, int y, int z, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
+	public static void supplyWarehouses(String location, int x, int y, int z, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
 		switch(location){
 		case "NewYork":
 			NewYork.initializeStock(x,y,z);
@@ -105,6 +105,7 @@ public class transactions {
 			   System.out.println("Error in reading string!");
 		   }
 	}
+	
 	public static int searchWarehouses(){
 		return 0;
 		//return the index of the warehouse
@@ -134,13 +135,13 @@ public class transactions {
 		   }
 	}
 	
-	public static void performTransaction(String order, String city){
-		 if (order.equals("S")){
+	public static void performTransaction(String typeOfTransaction, String city, String []inventoryCount, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
+		 if (typeOfTransaction.equals("S")){
 			  //call shipment function
 			 System.out.println("This was a shipment");
-			  shipItems(city, Integer.parseInt(numberArr[1]),Integer.parseInt(numberArr[2]),Integer.parseInt(numberArr[3]), NewYork, Miami, LosAngeles, Houston, Chicago);
+			  supplyWarehouses(city, Integer.parseInt(inventoryCount[1]),Integer.parseInt(inventoryCount[2]),Integer.parseInt(inventoryCount[3]), NewYork, Miami, LosAngeles, Houston, Chicago);
 		  }
-		 else if (order.equals("O")){
+		 else if (typeOfTransaction.equals("O")){
 			  //call order function  
 			 System.out.println("This was an order");
 		  }	
@@ -181,7 +182,7 @@ public class transactions {
 					  //Read in the initial stocks of the items in the warehouses
 					  initializeWarehouses(reader,NewYork, Miami, LosAngeles, Houston, Chicago);
 					  //int [] twohighest = findTwoHighest(2,NewYork, Miami, LosAngeles, Houston, Chicago);
-					  borrow("Z",NewYork, Miami, LosAngeles, Houston, Chicago);
+					  //borrow("Z",NewYork, Miami, LosAngeles, Houston, Chicago);
 					  String city, typeOfTransaction;
 					  String [] inventoryCount;
 					  while ((thisLine = reader.readLine()) != null) {
@@ -189,7 +190,7 @@ public class transactions {
 						 typeOfTransaction = thisLine.split(" ")[0];
 						 city = findCityName(thisLine);	
 						 inventoryCount = findWarehouseStocks(thisLine);
-						 performTransaction(thisLine, city);
+						 performTransaction(typeOfTransaction, city, inventoryCount,NewYork, Miami, LosAngeles, Houston, Chicago);
 											 
 					  }
 			}
