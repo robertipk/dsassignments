@@ -1,5 +1,7 @@
 package hwtwo;
 
+import java.text.NumberFormat;
+
 public class record {
 	
 	warehouse indivCity;
@@ -52,7 +54,7 @@ public class record {
 		if (type.equals("X")){
 			this.indivCity.increaseX(amountNeeded);
 			donor.getIndivCity().decreaseX(amountNeeded);
-			float totalPrice = makeTwoCitySale(amountNeeded, insuffAmt, this.indivCity.getPriceX());
+			makeTwoCitySale(amountNeeded, insuffAmt, this.indivCity.getPriceX());
 		}
 		else if (type.equals("Y")){
 			this.indivCity.increaseY(amountNeeded);
@@ -64,10 +66,9 @@ public class record {
 		}
 	}
 	
-	public static float makeTwoCitySale(int amtShipped, int amtOriginal, float price){
-		float orig = amtOriginal*price;
-		float withTax = amtShipped*(1.1)*(price);
-		return orig + withTax;
+	public static void makeTwoCitySale(int amtShipped, int amtOriginal, float price){
+		NumberFormat fmt1 = NumberFormat.getCurrencyInstance();
+		System.out.println("Price of Order: " + fmt1.format(amtOriginal*price) + fmt1.format(amtShipped*1.1*price) );
 	}
 	public void makeSimpleSale(String type, int amount){
 		if (type.equals("X")){
@@ -133,7 +134,7 @@ public class record {
 			donorCity = twoHighestWarehouses[0];
 		}
 		else{
-			donorContainsEnough = twoHighestWarehouses[0].getStockOf(type)>=amouamountToShipnt;
+			donorContainsEnough = twoHighestWarehouses[0].getStockOf(type)>=amountToShip;
 			donorCity = twoHighestWarehouses[1];
 		}
 		if (donorContainsEnough)

@@ -2,6 +2,7 @@ package hwtwo;
 
 import java.io.*;
 import java.lang.String;
+import java.text.NumberFormat;
 
 public class transactions {
 	private static float priceX, priceY, priceZ;
@@ -129,7 +130,11 @@ public class transactions {
 		Miami.setPrices(priceX, priceY, priceZ);
 		LosAngeles.setPrices(priceX, priceY, priceZ);
 		Chicago.setPrices(priceX, priceY, priceZ);
-		Houston.setPrices(priceX, priceY, priceZ);		
+		Houston.setPrices(priceX, priceY, priceZ);
+		NumberFormat fmt1 = NumberFormat.getCurrencyInstance();
+		System.out.println("price x is: " + fmt1.format(priceX));
+		System.out.println("price y is: " + priceY);
+		System.out.println("price z is: " + priceZ);
 	}
 	
 	public static void printInventories(record NewYork, record Miami, record LosAngeles, record Chicago, record Houston){
@@ -154,7 +159,8 @@ public class transactions {
 				reader = new BufferedReader(file);
 						
 				      String thisLine,city, typeOfTransaction;
-					  thisLine = reader.readLine();		 
+					  thisLine = reader.readLine();	
+					  System.out.println("The price line is as follows: " + thisLine);
 					  setPrices(thisLine, NewYork, Miami, LosAngeles, Houston, Chicago);
 					  initializeWarehouses(reader,NewYork, Miami, LosAngeles, Houston, Chicago);
 					  String [] inventoryCount;
@@ -163,7 +169,7 @@ public class transactions {
 						 typeOfTransaction = thisLine.split(" ")[0];
 						 city = findCityName(thisLine);	
 						 inventoryCount = findWarehouseStocks(thisLine);
-						 performTransaction(typeOfTransaction, city, inventoryCount,NewYork, Miami, LosAngeles, Houston, Chicago);
+						 //performTransaction(typeOfTransaction, city, inventoryCount,NewYork, Miami, LosAngeles, Houston, Chicago);
 											 
 					  }
 			}
