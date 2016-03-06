@@ -43,28 +43,28 @@ public class transactions {
 			vendorCity.makeSimpleSale("X", amountX);
 	}
 		else{									   //insufficient inventory - check other warehouses for stock
-			System.out.println("insufficient Stock");
+			System.out.println("insufficient Stock of itemX");
 			amtToShip = (amountX-vendorCity.getStockOf("X"));
-			vendorCity.takeItems("X", amtToShip, vendorCity.getStockOf("X"), NewYork, Miami, LosAngeles, Houston, Chicago);
+			vendorCity.tryToTakeItems("X", amtToShip, vendorCity.getStockOf("X"), NewYork, Miami, LosAngeles, Houston, Chicago);
 		}
 		if (vendorCity.getStockOf("Y") >= amountY){
-			System.out.println(vendorCity.getCityName() + " has enough stock of itemy");
+			System.out.println(vendorCity.getCityName() + " has enough stock of itemY");
 			vendorCity.makeSimpleSale("Y", amountY);
 		}
 		else{
-			System.out.println("insufficient Stock");
+			System.out.println("insufficient Stock of itemY");
 			amtToShip = (amountY-vendorCity.getStockOf("Y"));
-			vendorCity.takeItems("Y", amtToShip, vendorCity.getStockOf("Y"), NewYork, Miami, LosAngeles, Houston, Chicago);
+			vendorCity.tryToTakeItems("Y", amtToShip, vendorCity.getStockOf("Y"), NewYork, Miami, LosAngeles, Houston, Chicago);
 		}
 		
 		if (vendorCity.getStockOf("Z") >= amountZ){
-			System.out.println(vendorCity.getCityName() + " has enough stock of itemX");
+			System.out.println(vendorCity.getCityName() + " has enough stock of itemZ");
 			vendorCity.makeSimpleSale("Z", amountZ);
 		}
 		else{
-			System.out.println("insufficient Stock");
+			System.out.println("insufficient Stock of itemZ");
 			amtToShip = (amountZ-vendorCity.getStockOf("Z"));
-			vendorCity.takeItems("Z", amtToShip, vendorCity.getStockOf("Z"), NewYork, Miami, LosAngeles, Houston, Chicago);
+			vendorCity.tryToTakeItems("Z", amtToShip, vendorCity.getStockOf("Z"), NewYork, Miami, LosAngeles, Houston, Chicago);
 		}		
 	}
 	

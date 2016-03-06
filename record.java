@@ -29,9 +29,7 @@ public class record {
 		else 
 			return this.indivCity.getStockZ();	
 	}
-	public String toString() {
-		return "record [indivCity=" + indivCity + ", cityName=" + cityName + "]";
-	}
+
 
 	public void setIndivCity(warehouse indivCity) {
 		this.indivCity = indivCity;
@@ -52,17 +50,19 @@ public class record {
 	
 	public void takeFrom(String type, record donor, int amountNeeded, int insuffAmt){
 		if (type.equals("X")){
-			this.indivCity.increaseX(amountNeeded);
+			this.indivCity.decreaseX(insuffAmt);
 			donor.getIndivCity().decreaseX(amountNeeded);
 			makeTwoCitySale(amountNeeded, insuffAmt, this.indivCity.getPriceX());
 		}
 		else if (type.equals("Y")){
-			this.indivCity.increaseY(amountNeeded);
+			this.indivCity.decreaseY(insuffAmt);
 			donor.getIndivCity().decreaseY(amountNeeded);
+			makeTwoCitySale(amountNeeded, insuffAmt, this.indivCity.getPriceY());
 		}
 		else if (type.equals("Z")){
-			this.indivCity.increaseZ(amountNeeded);
-			donor.getIndivCity().decreaseZ(amountNeeded);		
+			this.indivCity.decreaseZ(insuffAmt);
+			donor.getIndivCity().decreaseZ(amountNeeded);
+			makeTwoCitySale(amountNeeded, insuffAmt, this.indivCity.getPriceZ());		
 		}
 	}
 	
@@ -126,17 +126,19 @@ public class record {
 		return arr;
 	}
 	
-	public void takeItems(String type, int amtToShip, int insuffAmt, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
+	public void tryToTakeItems(String type, int amtToShip, int insuffAmt, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
+		//search remaining warehouses for the one which has the most of the desired item
 		record [] twoHighestWarehouses = findTwoHighestWarehouses(type, NewYork, Miami, LosAngeles, Houston, Chicago);
 		boolean donorContainsEnough;
 		record donorCity;
-		if (this==twoHighestWarehouses[0]){
-			donorContainsEnough = twoHighestWarehouses[0].getStockOf(type)>=amtToShip;
-			donorCity = twoHighestWarehouses[0];
+		if (this==twoHighestWarehouses[0]){ //if the warehouse with the most of the desired item is the original warehouse
+											//then take from the warehouse with the second highest amount of the item
+			donorContainsEnough = twoHighestWarehouses[1].getStockOf(type)>=amtToShip;
+			donorCity = twoHighestWarehouses[1];
 		}
 		else{
 			donorContainsEnough = twoHighestWarehouses[0].getStockOf(type)>=amtToShip;
-			donorCity = twoHighestWarehouses[1];
+			donorCity = twoHighestWarehouses[0];
 		}
 		if (donorContainsEnough)
 			this.takeFrom(type, donorCity, amtToShip, insuffAmt);
