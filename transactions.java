@@ -161,13 +161,15 @@ public class transactions {
 						 city = findCityName(thisLine);	
 						 inventoryCount = findWarehouseStocks(thisLine);
 						 performTransaction(typeOfTransaction, city, inventoryCount,NewYork, Miami, LosAngeles, Houston, Chicago);
+						 System.out.println("----------------------------------");
 						 printInventories(NewYork, Miami, LosAngeles, Houston, Chicago);
+						 System.out.println("----------------------------------");
 					  }
 			}
 			catch(IOException e){
 				   System.out.println("Error, could not open the file!");
 			   }			
-			System.out.println("Final numbers for: ");
+			System.out.println("Final inventories: ");
 			printInventories(NewYork, Miami, LosAngeles, Houston, Chicago);
 
 			

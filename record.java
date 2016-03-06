@@ -42,7 +42,6 @@ public class record {
 	}
 	
 	public void increaseStock(int x, int y, int z){
-		System.out.println("Shipment being sent to " + this.cityName);
 		this.indivCity.increaseX(x);
 		this.indivCity.increaseY(y);
 		this.indivCity.increaseZ(z);
@@ -52,15 +51,18 @@ public class record {
 		if (type.equals("X")){
 			this.indivCity.decreaseX(insuffAmt);
 			donor.getIndivCity().decreaseX(amountNeeded);
+			System.out.println(amountNeeded + " of itemX shipped from " + donor.cityName + " to " + this.cityName);
 			makeTwoCitySale(amountNeeded, insuffAmt, this.indivCity.getPriceX());
 		}
 		else if (type.equals("Y")){
 			this.indivCity.decreaseY(insuffAmt);
 			donor.getIndivCity().decreaseY(amountNeeded);
+			System.out.println(amountNeeded + " of itemY shipped from " + donor.cityName + " to " + this.cityName);
 			makeTwoCitySale(amountNeeded, insuffAmt, this.indivCity.getPriceY());
 		}
 		else if (type.equals("Z")){
 			this.indivCity.decreaseZ(insuffAmt);
+			System.out.println(amountNeeded + " of itemZ shipped from " + donor.cityName + " to " + this.cityName);
 			donor.getIndivCity().decreaseZ(amountNeeded);
 			makeTwoCitySale(amountNeeded, insuffAmt, this.indivCity.getPriceZ());		
 		}
@@ -68,7 +70,7 @@ public class record {
 	
 	public static void makeTwoCitySale(int amtShipped, int amtOriginal, float price){
 		NumberFormat fmt1 = NumberFormat.getCurrencyInstance();
-		System.out.println("Price of Order: " + fmt1.format(amtOriginal*price) + fmt1.format(amtShipped*1.1*price) );
+		System.out.println("Total Order: " + fmt1.format(amtOriginal*price) + " + " + fmt1.format(amtShipped*1.1*price) );
 	}
 	
 	public void makeSimpleSale(String type, int amount){
@@ -93,7 +95,7 @@ public class record {
 	
 	public void printSimpleSale(String city, String xyz, float price, int amount){
 		NumberFormat fmt1 = NumberFormat.getCurrencyInstance();
-		System.out.println("Simple sale from " + city + ": Item" + xyz + " for " + fmt1.format(price) + " times " + amount + " for " + fmt1.format(price*amount));
+		//System.out.println("Simple sale from " + city + ": Item" + xyz + " for " + fmt1.format(price) + " times " + amount + " for " + fmt1.format(price*amount));
 	}
 	public void setPrices(float priceX, float priceY, float priceZ){
 		this.indivCity.setPriceX(priceX);
@@ -121,7 +123,6 @@ public class record {
 		      }
 		    }
 		int [] array = {high1,high2};
-		System.out.println("high1 is " + high1 + " high2 is " + high2);
 		record [] arr = {highest, secondhighest};
 		return arr;
 	}
@@ -143,7 +144,7 @@ public class record {
 		if (donorContainsEnough)
 			this.takeFrom(type, donorCity, amtToShip, insuffAmt);
 		else
-			System.out.println("The order was unfilled. Not enough inventory in second city.");
+			System.out.println("Order unfilled.");
 		
 	}
 }
