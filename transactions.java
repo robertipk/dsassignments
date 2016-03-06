@@ -9,6 +9,7 @@ public class transactions {
 	public static void supplyWarehouses(String city, int x, int y, int z, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
 		switch(city){
 		case "NewYork":
+			//System.out.println("#######################");
 			NewYork.increaseStock(x,y,z);
 			break;
 		case "Miami":
@@ -26,6 +27,41 @@ public class transactions {
 		}
 	}
 	
+	public static void processOrder(String city, int amountX, int amountY, int amountZ, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
+		record vendorCity;
+		if (city=="NewYork")
+			vendorCity = NewYork;
+		else if (city=="Miami")
+			vendorCity = Miami;
+		else if (city=="LosAngeles")
+			vendorCity = LosAngeles;
+		else if (city=="Houston")
+			vendorCity = Houston;
+		else
+			vendorCity = Chicago;
+	
+		//try to order itemX from city
+		if (vendorCity.getStockOf("X") >= amountX)
+			//if the warehouse has enough stock, no need to ship from another city
+			vendorCity.makeSimpleSale("X", amountX);
+		else
+			//require shipment from second city
+		
+		if (vendorCity.getStockOf("Y") >= amountY)
+			vendorCity.makeSimpleSale("Y", amountY);
+		
+		if (vendorCity.getStockOf("Z") >= amountZ)
+			vendorCity.makeSimpleSale("Z", amountZ);
+		
+		
+			
+
+		
+		//try to order itemY from city
+		
+		//try to order itemZ from city
+		
+	}
 	public static void borrow(record original, int amountNeeded, String type, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
 		//this method is run only if the warehouse is not able to fill the order and must borrow from another warehouse
 		
@@ -69,14 +105,6 @@ public class transactions {
 		return arr;
 	}
 	
-	public static void readOrder(String city, int x, int y, int z){
-		
-	}
-	
-	public static void printOrder(){
-		
-	}
-	
 	private static void initializeWarehouses(BufferedReader reader,record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
 		try{
 			record [] cities = {NewYork,Miami,LosAngeles,Houston,Chicago};
@@ -103,15 +131,6 @@ public class transactions {
 		   }
 	}
 	
-	public static int searchWarehouses(){
-		return 0;
-		//return the index of the warehouse
-	}
-	
-	public static void takeFromWarehouse(warehouse giver, warehouse receiver){
-		//charge ten percent tax		
-	}
-	
 	public static String findCityName(String text){
 		return text.substring(1).replaceAll("[^A-Za-z]+", "");
 	}
@@ -120,16 +139,6 @@ public class transactions {
 		String numbers = text.replaceAll("[^-?0-9]+", " ");
 		String [] numberArr = numbers.split(" ");
 		return numberArr;
-	}
-	
-	public static void readInFile(BufferedReader reader){
-		try{
-			FileReader file = new FileReader("C:\\Users\\admin\\Desktop\\data.txt");
-			reader = new BufferedReader(file);
-		}
-		catch(IOException e){
-			   System.out.println("Error, could not open the file!");
-		   }
 	}
 	
 	public static void performTransaction(String typeOfTransaction, String city, String []inventoryCount, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
@@ -146,7 +155,7 @@ public class transactions {
 	
 	public static void setPrices(String text,record NewYork, record Miami, record LosAngeles, record Chicago, record Houston){
 		String [] arr = text.split(" ");
-		//Find the prices of the items
+		//parse the line of text and set prices
 		float priceX = Float.parseFloat(arr[3].substring(1));
 		float priceY = Float.parseFloat(arr[7].substring(1));
 		float priceZ = Float.parseFloat(arr[11].substring(1));
@@ -172,12 +181,13 @@ public class transactions {
 			record LosAngeles = new record();
 			record Houston = new record();
 			record Chicago = new record();
-			String thisLine,city, typeOfTransaction;		
-			BufferedReader reader;
+							
 			try{
+				BufferedReader reader;
 				FileReader file = new FileReader("C:\\Users\\admin\\Desktop\\data.txt");
 				reader = new BufferedReader(file);
-	
+						
+				      String thisLine,city, typeOfTransaction;
 					  thisLine = reader.readLine();		 
 					  setPrices(thisLine, NewYork, Miami, LosAngeles, Houston, Chicago);
 					  initializeWarehouses(reader,NewYork, Miami, LosAngeles, Houston, Chicago);

@@ -63,14 +63,20 @@ public class record {
 		}
 	}
 	
-	public void makeSale(int amount, int type, int price){
-		if (type == 0)
+	public void makeSimpleSale(String type, int amount){
+		if (type.equals("X")){
 			this.getIndivCity().decreaseX(amount);
-		else if (type == 1)
+			printSimpleSale(this.cityName, "X", this.getIndivCity().getPriceX(), amount);
+		}
+		else if (type.equals("Y")){
 			this.getIndivCity().decreaseX(amount);
-		else if (type == 2)
+			printSimpleSale(this.cityName, "Y", this.getIndivCity().getPriceX(), amount);
+		}
+		else if (type.equals("Z")){
 			this.getIndivCity().decreaseX(amount);
-		System.out.println(this.cityName + " sold " + amount + " of product " + type + " for $" + amount*price);	
+			printSimpleSale(this.cityName, "Z", this.getIndivCity().getPriceX(), amount);
+		}
+		
 	}
 	
 	public void printInventory(){
@@ -78,6 +84,9 @@ public class record {
 		System.out.println(this.cityName + ": " + stock[0] + " " + stock[1] + " " + stock[2]);
 	}
 	
+	public void printSimpleSale(String city, String xyz, float price, int amount){
+		System.out.println("Simple sale from " + city + ": Item" + xyz + " for " + price + " times " + amount + " for " + price*amount);
+	}
 	public void setPrices(float priceX, float priceY, float priceZ){
 		this.indivCity.setPriceX(priceX);
 		this.indivCity.setPriceY(priceY);
