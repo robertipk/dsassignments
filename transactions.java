@@ -1,30 +1,27 @@
 package hwtwo;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.*;
 import java.lang.String;
 
 public class transactions {
 	private static float priceX, priceY, priceZ;
 	
-	public static void supplyWarehouses(String location, int x, int y, int z, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
-		switch(location){
+	public static void supplyWarehouses(String city, int x, int y, int z, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
+		switch(city){
 		case "NewYork":
-			NewYork.initializeStock(x,y,z);
+			NewYork.increaseStock(x,y,z);
 			break;
 		case "Miami":
-			Miami.initializeStock(x,y,z);
+			Miami.increaseStock(x,y,z);
 			break;
 		case "LosAngeles":
-			LosAngeles.initializeStock(x,y,z);
+			LosAngeles.increaseStock(x,y,z);
 			break;
 		case "Houston":
-			Houston.initializeStock(x,y,z);
+			Houston.increaseStock(x,y,z);
 			break;
 		case "Chicago":
-			Chicago.initializeStock(x,y,z);
+			Chicago.increaseStock(x,y,z);
 			break;	
 		}
 	}
@@ -147,12 +144,17 @@ public class transactions {
 		  }	
 	}
 	
-	public static void setPrices(String text, float priceX, float priceY, float priceZ){
+	public static void setPrices(String text,record NewYork, record Miami, record LosAngeles, record Chicago, record Houston){
 		String [] arr = text.split(" ");
 		//Find the prices of the items
-		priceX = Float.parseFloat(arr[3].substring(1));
-		priceY = Float.parseFloat(arr[7].substring(1));
-		priceZ = Float.parseFloat(arr[11].substring(1));
+		float priceX = Float.parseFloat(arr[3].substring(1));
+		float priceY = Float.parseFloat(arr[7].substring(1));
+		float priceZ = Float.parseFloat(arr[11].substring(1));
+		NewYork.setPrices(priceX, priceY, priceZ);
+		Miami.setPrices(priceX, priceY, priceZ);
+		LosAngeles.setPrices(priceX, priceY, priceZ);
+		Chicago.setPrices(priceX, priceY, priceZ);
+		Houston.setPrices(priceX, priceY, priceZ);		
 	}
 	
 	public static void printInventories(record NewYork, record Miami, record LosAngeles, record Chicago, record Houston){
@@ -170,20 +172,15 @@ public class transactions {
 			record LosAngeles = new record();
 			record Houston = new record();
 			record Chicago = new record();
-			String thisLine;
-			
+			String thisLine,city, typeOfTransaction;		
 			BufferedReader reader;
 			try{
 				FileReader file = new FileReader("C:\\Users\\admin\\Desktop\\data.txt");
 				reader = new BufferedReader(file);
 	
 					  thisLine = reader.readLine();		 
-					  setPrices(thisLine, priceX, priceY, priceZ);
-					  //Read in the initial stocks of the items in the warehouses
+					  setPrices(thisLine, NewYork, Miami, LosAngeles, Houston, Chicago);
 					  initializeWarehouses(reader,NewYork, Miami, LosAngeles, Houston, Chicago);
-					  //int [] twohighest = findTwoHighest(2,NewYork, Miami, LosAngeles, Houston, Chicago);
-					  //borrow("Z",NewYork, Miami, LosAngeles, Houston, Chicago);
-					  String city, typeOfTransaction;
 					  String [] inventoryCount;
 					  while ((thisLine = reader.readLine()) != null) {
 						 System.out.println(thisLine);

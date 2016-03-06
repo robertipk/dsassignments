@@ -3,6 +3,33 @@ package hwtwo;
 public class warehouse {
 	//each instance of warehouse contains an array of three ints
 	private int [] itemStock = {0,0,0};
+	private float priceX;
+	private float priceY;
+	private float priceZ;
+	
+	public float getPriceX() {
+		return priceX;
+	}
+
+	public void setPriceX(float priceOfX) {
+		this.priceX = priceOfX;
+	}
+
+	public float getPriceY() {
+		return priceY;
+	}
+
+	public void setPriceY(float priceOfY) {
+		this.priceY = priceOfY;
+	}
+
+	public float getPriceZ() {
+		return priceZ;
+	}
+
+	public void setPriceZ(float priceOfZ) {
+		this.priceZ = priceOfZ;
+	}
 
 	public warehouse(int x, int y, int z) {
 		this.itemStock[0] = x;

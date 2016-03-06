@@ -41,7 +41,7 @@ public class record {
 		this.cityName = cityName;
 	}
 	
-	public void initializeStock(int x, int y, int z){
+	public void increaseStock(int x, int y, int z){
 		System.out.println("Shipment being sent to " + this.cityName);
 		this.indivCity.increaseX(x);
 		this.indivCity.increaseY(y);
@@ -49,15 +49,15 @@ public class record {
 	}
 	
 	public void takeFrom(String type, record donor, int amountNeeded){
-		if (type == "X"){
+		if (type.equals("X")){
 			this.indivCity.increaseX(amountNeeded);
 			donor.getIndivCity().decreaseX(amountNeeded);
 		}
-		else if (type == "Y"){
+		else if (type.equals("Y")){
 			this.indivCity.increaseY(amountNeeded);
 			donor.getIndivCity().decreaseY(amountNeeded);
 		}
-		else { // if type == Z
+		else if (type.equals("Z")){
 			this.indivCity.increaseZ(amountNeeded);
 			donor.getIndivCity().decreaseZ(amountNeeded);		
 		}
@@ -76,5 +76,11 @@ public class record {
 	public void printInventory(){
 		int [] stock = this.indivCity.getItemStock();
 		System.out.println(this.cityName + ": " + stock[0] + " " + stock[1] + " " + stock[2]);
+	}
+	
+	public void setPrices(float priceX, float priceY, float priceZ){
+		this.indivCity.setPriceX(priceX);
+		this.indivCity.setPriceY(priceY);
+		this.indivCity.setPriceZ(priceZ);
 	}
 }
