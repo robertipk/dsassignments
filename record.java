@@ -40,6 +40,31 @@ public class record {
 		this.indivCity.increaseZ(z);
 	}
 	
+	public void borrowFrom(int type, record donor, int amountNeeded){
+		if (type == 0){
+			this.indivCity.increaseX(amountNeeded);
+			donor.getIndivCity().decreaseX(amountNeeded);
+		}
+		else if (type == 1){
+			this.indivCity.increaseY(amountNeeded);
+			donor.getIndivCity().decreaseY(amountNeeded);
+		}
+		else {
+			this.indivCity.increaseZ(amountNeeded);
+			donor.getIndivCity().decreaseZ(amountNeeded);		
+		}
+	}
+	
+	public void makeSale(int amount, int type, int price){
+		if (type == 0)
+			this.getIndivCity().decreaseX(amount);
+		else if (type == 1)
+			this.getIndivCity().decreaseX(amount);
+		else if (type == 2)
+			this.getIndivCity().decreaseX(amount);
+		System.out.println(this.cityName + " sold " + amount + " of product " + type + " for $" + amount*price);	
+	}
+	
 	public void printStock(){
 		int [] stock = this.indivCity.getItemStock();
 		System.out.println(this.cityName + ": " + stock[0] + " " + stock[1] + " " + stock[2]);
