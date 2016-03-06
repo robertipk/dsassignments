@@ -41,10 +41,13 @@ public class transactions {
 			vendorCity = Chicago;
 	
 		//try to order itemX from city
+		int amtToShip = 0;
 		if (vendorCity.getStockOf("X") >= amountX)
 			//if the warehouse has enough stock, no need to ship from another city
 			vendorCity.makeSimpleSale("X", amountX);
 		else
+			amtToShip = (amountX-vendorCity.getStockOf("X"));
+			vendorCity.borrow("X", amtToShip, amountX, NewYork, Miami, LosAngeles, Houston, Chicago);
 			//require shipment from second city
 		
 		if (vendorCity.getStockOf("Y") >= amountY){
@@ -63,48 +66,6 @@ public class transactions {
 		
 		//try to order itemZ from city
 		
-	}
-	public static void borrow(record original, int amountNeeded, String type, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
-		//this method is run only if the warehouse is not able to fill the order and must borrow from another warehouse
-		
-		record [] twoHighest = findTwoHighestWarehouses(type, NewYork, Miami, LosAngeles, Houston, Chicago);
-		boolean containsEnough;
-		record donorCity;
-		if (original==twoHighest[0]){
-			containsEnough = twoHighest[0].getStockOf(type)>=amountNeeded;
-			donorCity = twoHighest[0];
-		}
-		else{
-			containsEnough = twoHighest[0].getStockOf(type)>=amountNeeded;
-			donorCity = twoHighest[1];
-		}
-		original.takeFrom(type, donorCity, amountNeeded);	
-	}
-	
-	//returns the two warehouses with the highest amount of the specified item
-	public static record [] findTwoHighestWarehouses(String type, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
-		record [] allStocks = {NewYork, Miami, LosAngeles, Houston, Chicago};	
-		int high1 = Integer.MIN_VALUE;
-		record highest = new record ();
-		record secondhighest = new record();
-		int high2 = Integer.MIN_VALUE;
-		int stock;
-		for (record city : allStocks) {
-			  stock = city.getStockOf(type);
-		      if (stock > high1) {
-		        high2 = high1;
-		        secondhighest = highest;
-		        high1 = stock;
-		        highest = city;
-		      } else if (stock > high2) {
-		        high2 = stock;
-		        secondhighest = city;
-		      }
-		    }
-		int [] array = {high1,high2};
-		System.out.println("high1 is " + high1 + " high2 is " + high2);
-		record [] arr = {highest, secondhighest};
-		return arr;
 	}
 	
 	private static void initializeWarehouses(BufferedReader reader,record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
