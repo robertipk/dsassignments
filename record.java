@@ -19,6 +19,14 @@ public class record {
 		return indivCity;
 	}
 
+	public int getStockOf(String xyz){
+		if (xyz == "X")
+			return this.indivCity.getStockX();
+		else if (xyz == "Y")
+			return this.indivCity.getStockY();
+		else 
+			return this.indivCity.getStockZ();	
+	}
 	public String toString() {
 		return "record [indivCity=" + indivCity + ", cityName=" + cityName + "]";
 	}
@@ -33,23 +41,23 @@ public class record {
 		this.cityName = cityName;
 	}
 	
-	public void increaseStock(int x, int y, int z){
+	public void initializeStock(int x, int y, int z){
 		System.out.println("Shipment being sent to " + this.cityName);
 		this.indivCity.increaseX(x);
 		this.indivCity.increaseY(y);
 		this.indivCity.increaseZ(z);
 	}
 	
-	public void borrowFrom(int type, record donor, int amountNeeded){
-		if (type == 0){
+	public void takeFrom(String type, record donor, int amountNeeded){
+		if (type == "X"){
 			this.indivCity.increaseX(amountNeeded);
 			donor.getIndivCity().decreaseX(amountNeeded);
 		}
-		else if (type == 1){
+		else if (type == "Y"){
 			this.indivCity.increaseY(amountNeeded);
 			donor.getIndivCity().decreaseY(amountNeeded);
 		}
-		else {
+		else { // if type == Z
 			this.indivCity.increaseZ(amountNeeded);
 			donor.getIndivCity().decreaseZ(amountNeeded);		
 		}

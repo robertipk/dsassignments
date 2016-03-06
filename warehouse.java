@@ -10,18 +10,30 @@ public class warehouse {
 		this.itemStock[2] = z;
 	}
 	
-	public void increaseX(int shipment){
-		this.itemStock[0] += shipment;
+	public int[] getItemStock() {
+		return this.itemStock;
 	}
 	
-	public int[] getItemStock() {
-		return itemStock;
+	public int getStockX(){
+		return this.itemStock[0];
 	}
-
+	
+	public int getStockY(){
+		return this.itemStock[1];
+	}
+	
+	public int getStockZ(){
+		return this.itemStock[2];
+	}
+	
 	public void setItemStock(int[] stockArray) {
 		this.itemStock = stockArray;
 	}
 
+	public void increaseX(int shipment){
+		this.itemStock[0] += shipment;
+	}
+	
 	public void increaseY(int shipment){
 		this.itemStock[1] += shipment;
 	}
