@@ -69,12 +69,12 @@ public class record {
 			printSimpleSale(this.cityName, "X", this.getIndivCity().getPriceX(), amount);
 		}
 		else if (type.equals("Y")){
-			this.getIndivCity().decreaseX(amount);
-			printSimpleSale(this.cityName, "Y", this.getIndivCity().getPriceX(), amount);
+			this.getIndivCity().decreaseY(amount);
+			printSimpleSale(this.cityName, "Y", this.getIndivCity().getPriceY(), amount);
 		}
 		else if (type.equals("Z")){
-			this.getIndivCity().decreaseX(amount);
-			printSimpleSale(this.cityName, "Z", this.getIndivCity().getPriceX(), amount);
+			this.getIndivCity().decreaseZ(amount);
+			printSimpleSale(this.cityName, "Z", this.getIndivCity().getPriceZ(), amount);
 		}
 		
 	}

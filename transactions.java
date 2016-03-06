@@ -47,11 +47,13 @@ public class transactions {
 		else
 			//require shipment from second city
 		
-		if (vendorCity.getStockOf("Y") >= amountY)
+		if (vendorCity.getStockOf("Y") >= amountY){
 			vendorCity.makeSimpleSale("Y", amountY);
+		}
 		
-		if (vendorCity.getStockOf("Z") >= amountZ)
+		if (vendorCity.getStockOf("Z") >= amountZ){
 			vendorCity.makeSimpleSale("Z", amountZ);
+		}
 		
 		
 			
@@ -142,14 +144,17 @@ public class transactions {
 	}
 	
 	public static void performTransaction(String typeOfTransaction, String city, String []inventoryCount, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
-		 if (typeOfTransaction.equals("S")){
+		int amountX = Integer.parseInt(inventoryCount[1]);
+		int amountY = Integer.parseInt(inventoryCount[2]);
+		int amountZ = Integer.parseInt(inventoryCount[3]);
+		if (typeOfTransaction.equals("S")){
 			  //call shipment function
 			 System.out.println("This was a shipment");
-			  supplyWarehouses(city, Integer.parseInt(inventoryCount[1]),Integer.parseInt(inventoryCount[2]),Integer.parseInt(inventoryCount[3]), NewYork, Miami, LosAngeles, Houston, Chicago);
+			  supplyWarehouses(city, amountX,amountY,amountZ, NewYork, Miami, LosAngeles, Houston, Chicago);
 		  }
 		 else if (typeOfTransaction.equals("O")){
 			  //call order function  
-			 System.out.println("This was an order");
+			 processOrder(city,amountX,amountY,amountZ, NewYork, Miami, LosAngeles, Houston, Chicago);
 		  }	
 	}
 	
