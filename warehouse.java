@@ -1,7 +1,5 @@
 package hwtwo;
 
-import java.text.NumberFormat;
-
 public class warehouse {
 	//each instance of warehouse contains an array of three ints
 	private int [] itemStock = {0,0,0};

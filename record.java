@@ -70,6 +70,7 @@ public class record {
 		NumberFormat fmt1 = NumberFormat.getCurrencyInstance();
 		System.out.println("Price of Order: " + fmt1.format(amtOriginal*price) + fmt1.format(amtShipped*1.1*price) );
 	}
+	
 	public void makeSimpleSale(String type, int amount){
 		if (type.equals("X")){
 			this.getIndivCity().decreaseX(amount);
@@ -82,8 +83,7 @@ public class record {
 		else if (type.equals("Z")){
 			this.getIndivCity().decreaseZ(amount);
 			printSimpleSale(this.cityName, "Z", this.getIndivCity().getPriceZ(), amount);
-		}
-		
+		}	
 	}
 	
 	public void printInventory(){
@@ -92,7 +92,8 @@ public class record {
 	}
 	
 	public void printSimpleSale(String city, String xyz, float price, int amount){
-		System.out.println("Simple sale from " + city + ": Item" + xyz + " for " + price + " times " + amount + " for " + price*amount);
+		NumberFormat fmt1 = NumberFormat.getCurrencyInstance();
+		System.out.println("Simple sale from " + city + ": Item" + xyz + " for " + fmt1.format(price) + " times " + amount + " for " + fmt1.format(price*amount));
 	}
 	public void setPrices(float priceX, float priceY, float priceZ){
 		this.indivCity.setPriceX(priceX);
@@ -125,20 +126,20 @@ public class record {
 		return arr;
 	}
 	
-	public void borrow(String type, int amountToShip, int insuffAmt, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
+	public void takeItems(String type, int amtToShip, int insuffAmt, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
 		record [] twoHighestWarehouses = findTwoHighestWarehouses(type, NewYork, Miami, LosAngeles, Houston, Chicago);
 		boolean donorContainsEnough;
 		record donorCity;
 		if (this==twoHighestWarehouses[0]){
-			donorContainsEnough = twoHighestWarehouses[0].getStockOf(type)>=amountToShip;
+			donorContainsEnough = twoHighestWarehouses[0].getStockOf(type)>=amtToShip;
 			donorCity = twoHighestWarehouses[0];
 		}
 		else{
-			donorContainsEnough = twoHighestWarehouses[0].getStockOf(type)>=amountToShip;
+			donorContainsEnough = twoHighestWarehouses[0].getStockOf(type)>=amtToShip;
 			donorCity = twoHighestWarehouses[1];
 		}
 		if (donorContainsEnough)
-			this.takeFrom(type, donorCity, amountToShip, insuffAmt);
+			this.takeFrom(type, donorCity, amtToShip, insuffAmt);
 		else
 			System.out.println("The order was unfilled. Not enough inventory in second city.");
 		

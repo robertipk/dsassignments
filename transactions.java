@@ -2,15 +2,11 @@ package hwtwo;
 
 import java.io.*;
 import java.lang.String;
-import java.text.NumberFormat;
 
 public class transactions {
-	private static float priceX, priceY, priceZ;
-	
-	public static void supplyWarehouses(String city, int x, int y, int z, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
+	public static void processShipment(String city, int x, int y, int z, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
 		switch(city){
 		case "NewYork":
-			//System.out.println("#######################");
 			NewYork.increaseStock(x,y,z);
 			break;
 		case "Miami":
@@ -30,43 +26,46 @@ public class transactions {
 	
 	public static void processOrder(String city, int amountX, int amountY, int amountZ, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
 		record vendorCity;
-		if (city=="NewYork")
+		if (city.equals("NewYork"))
 			vendorCity = NewYork;
-		else if (city=="Miami")
+		else if (city.equals("Miami"))
 			vendorCity = Miami;
-		else if (city=="LosAngeles")
+		else if (city.equals("LosAngeles"))
 			vendorCity = LosAngeles;
-		else if (city=="Houston")
+		else if (city.equals("Houston"))
 			vendorCity = Houston;
 		else
 			vendorCity = Chicago;
 	
-		//try to order itemX from city
 		int amtToShip = 0;
-		if (vendorCity.getStockOf("X") >= amountX)
-			//if the warehouse has enough stock, no need to ship from another city
+		if (vendorCity.getStockOf("X") >= amountX){ //warehouse has enough stock
+			System.out.println(vendorCity.getCityName() + " has enough stock of itemX");
 			vendorCity.makeSimpleSale("X", amountX);
-		else
+	}
+		else{									   //insufficient inventory - check other warehouses for stock
+			System.out.println("insufficient Stock");
 			amtToShip = (amountX-vendorCity.getStockOf("X"));
-			vendorCity.borrow("X", amtToShip, amountX, NewYork, Miami, LosAngeles, Houston, Chicago);
-			//require shipment from second city
-		
+			vendorCity.takeItems("X", amtToShip, vendorCity.getStockOf("X"), NewYork, Miami, LosAngeles, Houston, Chicago);
+		}
 		if (vendorCity.getStockOf("Y") >= amountY){
+			System.out.println(vendorCity.getCityName() + " has enough stock of itemy");
 			vendorCity.makeSimpleSale("Y", amountY);
+		}
+		else{
+			System.out.println("insufficient Stock");
+			amtToShip = (amountY-vendorCity.getStockOf("Y"));
+			vendorCity.takeItems("Y", amtToShip, vendorCity.getStockOf("Y"), NewYork, Miami, LosAngeles, Houston, Chicago);
 		}
 		
 		if (vendorCity.getStockOf("Z") >= amountZ){
+			System.out.println(vendorCity.getCityName() + " has enough stock of itemX");
 			vendorCity.makeSimpleSale("Z", amountZ);
 		}
-		
-		
-			
-
-		
-		//try to order itemY from city
-		
-		//try to order itemZ from city
-		
+		else{
+			System.out.println("insufficient Stock");
+			amtToShip = (amountZ-vendorCity.getStockOf("Z"));
+			vendorCity.takeItems("Z", amtToShip, vendorCity.getStockOf("Z"), NewYork, Miami, LosAngeles, Houston, Chicago);
+		}		
 	}
 	
 	private static void initializeWarehouses(BufferedReader reader,record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
@@ -110,13 +109,10 @@ public class transactions {
 		int amountY = Integer.parseInt(inventoryCount[2]);
 		int amountZ = Integer.parseInt(inventoryCount[3]);
 		if (typeOfTransaction.equals("S")){
-			  //call shipment function
-			 System.out.println("This was a shipment");
-			  supplyWarehouses(city, amountX,amountY,amountZ, NewYork, Miami, LosAngeles, Houston, Chicago);
+			 processShipment(city, amountX,amountY,amountZ, NewYork, Miami, LosAngeles, Houston, Chicago);
 		  }
 		 else if (typeOfTransaction.equals("O")){
-			  //call order function  
-			 processOrder(city,amountX,amountY,amountZ, NewYork, Miami, LosAngeles, Houston, Chicago);
+			 processOrder(city, amountX, amountY, amountZ, NewYork, Miami, LosAngeles, Houston, Chicago);
 		  }	
 	}
 	
@@ -131,10 +127,6 @@ public class transactions {
 		LosAngeles.setPrices(priceX, priceY, priceZ);
 		Chicago.setPrices(priceX, priceY, priceZ);
 		Houston.setPrices(priceX, priceY, priceZ);
-		NumberFormat fmt1 = NumberFormat.getCurrencyInstance();
-		System.out.println("price x is: " + fmt1.format(priceX));
-		System.out.println("price y is: " + priceY);
-		System.out.println("price z is: " + priceZ);
 	}
 	
 	public static void printInventories(record NewYork, record Miami, record LosAngeles, record Chicago, record Houston){
@@ -158,9 +150,8 @@ public class transactions {
 				FileReader file = new FileReader("C:\\Users\\admin\\Desktop\\data.txt");
 				reader = new BufferedReader(file);
 						
-				      String thisLine,city, typeOfTransaction;
+				      String thisLine,city,typeOfTransaction;
 					  thisLine = reader.readLine();	
-					  System.out.println("The price line is as follows: " + thisLine);
 					  setPrices(thisLine, NewYork, Miami, LosAngeles, Houston, Chicago);
 					  initializeWarehouses(reader,NewYork, Miami, LosAngeles, Houston, Chicago);
 					  String [] inventoryCount;
@@ -169,8 +160,8 @@ public class transactions {
 						 typeOfTransaction = thisLine.split(" ")[0];
 						 city = findCityName(thisLine);	
 						 inventoryCount = findWarehouseStocks(thisLine);
-						 //performTransaction(typeOfTransaction, city, inventoryCount,NewYork, Miami, LosAngeles, Houston, Chicago);
-											 
+						 performTransaction(typeOfTransaction, city, inventoryCount,NewYork, Miami, LosAngeles, Houston, Chicago);
+						 printInventories(NewYork, Miami, LosAngeles, Houston, Chicago);
 					  }
 			}
 			catch(IOException e){
