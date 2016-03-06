@@ -73,7 +73,7 @@ public class record {
 		System.out.println(this.cityName + " sold " + amount + " of product " + type + " for $" + amount*price);	
 	}
 	
-	public void printStock(){
+	public void printInventory(){
 		int [] stock = this.indivCity.getItemStock();
 		System.out.println(this.cityName + ": " + stock[0] + " " + stock[1] + " " + stock[2]);
 	}

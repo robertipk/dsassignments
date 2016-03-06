@@ -32,7 +32,7 @@ public class transactions {
 	public static void borrow(record original, int amountNeeded, String type, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
 		//this method is run only if the warehouse is not able to fill the order and must borrow from another warehouse
 		
-		record [] twoHighest = findTwoHighest(type, NewYork, Miami, LosAngeles, Houston, Chicago);
+		record [] twoHighest = findTwoHighestWarehouses(type, NewYork, Miami, LosAngeles, Houston, Chicago);
 		boolean containsEnough;
 		record donorCity;
 		if (original==twoHighest[0]){
@@ -43,13 +43,11 @@ public class transactions {
 			containsEnough = twoHighest[0].getStockOf(type)>=amountNeeded;
 			donorCity = twoHighest[1];
 		}
-		original.takeFrom(type, donorCity, amountNeeded);
-		
+		original.takeFrom(type, donorCity, amountNeeded);	
 	}
 	
-
 	//returns the two warehouses with the highest amount of the specified item
-	public static record [] findTwoHighest(String type, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
+	public static record [] findTwoHighestWarehouses(String type, record NewYork, record Miami, record LosAngeles, record Houston, record Chicago){
 		record [] allStocks = {NewYork, Miami, LosAngeles, Houston, Chicago};	
 		int high1 = Integer.MIN_VALUE;
 		record highest = new record ();
@@ -113,8 +111,7 @@ public class transactions {
 	}
 	
 	public static void takeFromWarehouse(warehouse giver, warehouse receiver){
-		//charge ten percent tax
-		
+		//charge ten percent tax		
 	}
 	
 	public static String findCityName(String text){
@@ -136,6 +133,35 @@ public class transactions {
 			   System.out.println("Error, could not open the file!");
 		   }
 	}
+	
+	public static void performTransaction(String order, String city){
+		 if (order.equals("S")){
+			  //call shipment function
+			 System.out.println("This was a shipment");
+			  shipItems(city, Integer.parseInt(numberArr[1]),Integer.parseInt(numberArr[2]),Integer.parseInt(numberArr[3]), NewYork, Miami, LosAngeles, Houston, Chicago);
+		  }
+		 else if (order.equals("O")){
+			  //call order function  
+			 System.out.println("This was an order");
+		  }	
+	}
+	
+	public static void setPrices(String text, float priceX, float priceY, float priceZ){
+		String [] arr = text.split(" ");
+		//Find the prices of the items
+		priceX = Float.parseFloat(arr[3].substring(1));
+		priceY = Float.parseFloat(arr[7].substring(1));
+		priceZ = Float.parseFloat(arr[11].substring(1));
+	}
+	
+	public static void printInventories(record NewYork, record Miami, record LosAngeles, record Chicago, record Houston){
+		NewYork.printInventory();
+		Miami.printInventory();
+		LosAngeles.printInventory();
+		Chicago.printInventory();
+		Houston.printInventory();	
+	}
+	
 	public static void main(String [] args)
 		{
 			record NewYork = new record();
@@ -144,54 +170,35 @@ public class transactions {
 			record Houston = new record();
 			record Chicago = new record();
 			String thisLine;
-			String [] arr;
+			
 			BufferedReader reader;
 			try{
 				FileReader file = new FileReader("C:\\Users\\admin\\Desktop\\data.txt");
 				reader = new BufferedReader(file);
 	
-					  thisLine = reader.readLine();
-					  System.out.println(thisLine);
-					  arr = thisLine.split(" ");
-					  //Find the prices of the items
-					  priceX = Float.parseFloat(arr[3].substring(1));
-					  priceY = Float.parseFloat(arr[7].substring(1));
-					  priceZ = Float.parseFloat(arr[11].substring(1));
-					  System.out.println(priceX);
+					  thisLine = reader.readLine();		 
+					  setPrices(thisLine, priceX, priceY, priceZ);
 					  //Read in the initial stocks of the items in the warehouses
 					  initializeWarehouses(reader,NewYork, Miami, LosAngeles, Houston, Chicago);
 					  //int [] twohighest = findTwoHighest(2,NewYork, Miami, LosAngeles, Houston, Chicago);
 					  borrow("Z",NewYork, Miami, LosAngeles, Houston, Chicago);
-					  String cityname, typeOfTransaction;
-					  String [] numberArr;
+					  String city, typeOfTransaction;
+					  String [] inventoryCount;
 					  while ((thisLine = reader.readLine()) != null) {
 						 System.out.println(thisLine);
-						 arr = thisLine.split(" ");
-						 typeOfTransaction = arr[0];
-						//find name of city
-						cityname = findCityName(thisLine);
-						//find the three numbers		
-						numberArr = findWarehouseStocks(thisLine);
-						 if (typeOfTransaction.equals("S")){
-							  //call shipment function
-							 System.out.println("This was a shipment");
-							  shipItems(cityname, Integer.parseInt(numberArr[1]),Integer.parseInt(numberArr[2]),Integer.parseInt(numberArr[3]), NewYork, Miami, LosAngeles, Houston, Chicago);
-						  }
-						 else if (typeOfTransaction.equals("O")){
-							  //call order function  
-							 System.out.println("This was an order");
-						  }						 
+						 typeOfTransaction = thisLine.split(" ")[0];
+						 city = findCityName(thisLine);	
+						 inventoryCount = findWarehouseStocks(thisLine);
+						 performTransaction(thisLine, city);
+											 
 					  }
 			}
 			catch(IOException e){
 				   System.out.println("Error, could not open the file!");
 			   }			
-			System.out.println("Final numbers for: ");		
-			NewYork.printStock();
-			Miami.printStock();
-			LosAngeles.printStock();
-			Chicago.printStock();
-			Houston.printStock();
+			System.out.println("Final numbers for: ");
+			printInventories(NewYork, Miami, LosAngeles, Houston, Chicago);
+
 			
 		}
 }
