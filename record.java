@@ -1,3 +1,4 @@
+//Robert Ip March 6, 2016  Data Structures CISC 3130
 package hwtwo;
 
 import java.text.NumberFormat;

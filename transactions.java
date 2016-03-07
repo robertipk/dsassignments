@@ -1,3 +1,5 @@
+//Robert Ip March 6, 2016  Data Structures CISC 3130
+
 package hwtwo;
 
 import java.io.*;
@@ -68,9 +70,10 @@ public class transactions {
 			String thisLine, numbers, cityname;
 			String [] numberArr;
 			
-			for(int i=0;i<5;i++)
+			for(int i=0;i<4;i++)
 			{	
 				thisLine = reader.readLine();
+				System.out.println(thisLine);
 				//find name of city
 				cityname = thisLine.substring(1).replaceAll("[^A-Za-z]+", "");
 				//find the three numbers
