@@ -39,30 +39,24 @@ public class transactions {
 	
 		int amtToShip = 0;
 		if (vendorCity.getStockOf("X") >= amountX){ //warehouse has enough stock
-			System.out.println(vendorCity.getCityName() + " has enough stock of itemX");
 			vendorCity.makeSimpleSale("X", amountX);
 	}
 		else{									   //insufficient inventory - check other warehouses for stock
-			System.out.println("insufficient Stock of itemX");
 			amtToShip = (amountX-vendorCity.getStockOf("X"));
 			vendorCity.tryToTakeItems("X", amtToShip, vendorCity.getStockOf("X"), NewYork, Miami, LosAngeles, Houston, Chicago);
 		}
 		if (vendorCity.getStockOf("Y") >= amountY){
-			System.out.println(vendorCity.getCityName() + " has enough stock of itemY");
 			vendorCity.makeSimpleSale("Y", amountY);
 		}
 		else{
-			System.out.println("insufficient Stock of itemY");
 			amtToShip = (amountY-vendorCity.getStockOf("Y"));
 			vendorCity.tryToTakeItems("Y", amtToShip, vendorCity.getStockOf("Y"), NewYork, Miami, LosAngeles, Houston, Chicago);
 		}
 		
 		if (vendorCity.getStockOf("Z") >= amountZ){
-			System.out.println(vendorCity.getCityName() + " has enough stock of itemZ");
 			vendorCity.makeSimpleSale("Z", amountZ);
 		}
 		else{
-			System.out.println("insufficient Stock of itemZ");
 			amtToShip = (amountZ-vendorCity.getStockOf("Z"));
 			vendorCity.tryToTakeItems("Z", amtToShip, vendorCity.getStockOf("Z"), NewYork, Miami, LosAngeles, Houston, Chicago);
 		}		
@@ -130,11 +124,13 @@ public class transactions {
 	}
 	
 	public static void printInventories(record NewYork, record Miami, record LosAngeles, record Chicago, record Houston){
+		System.out.println("----------------------------------");
 		NewYork.printInventory();
 		Miami.printInventory();
 		LosAngeles.printInventory();
 		Chicago.printInventory();
 		Houston.printInventory();	
+		System.out.println("----------------------------------");
 	}
 	
 	public static void main(String [] args)
@@ -148,8 +144,7 @@ public class transactions {
 			try{
 				BufferedReader reader;
 				FileReader file = new FileReader("C:\\Users\\admin\\Desktop\\data.txt");
-				reader = new BufferedReader(file);
-						
+				reader = new BufferedReader(file);			
 				      String thisLine,city,typeOfTransaction;
 					  thisLine = reader.readLine();	
 					  setPrices(thisLine, NewYork, Miami, LosAngeles, Houston, Chicago);
@@ -160,18 +155,12 @@ public class transactions {
 						 typeOfTransaction = thisLine.split(" ")[0];
 						 city = findCityName(thisLine);	
 						 inventoryCount = findWarehouseStocks(thisLine);
-						 performTransaction(typeOfTransaction, city, inventoryCount,NewYork, Miami, LosAngeles, Houston, Chicago);
-						 System.out.println("----------------------------------");
+						 performTransaction(typeOfTransaction, city, inventoryCount,NewYork, Miami, LosAngeles, Houston, Chicago);		 
 						 printInventories(NewYork, Miami, LosAngeles, Houston, Chicago);
-						 System.out.println("----------------------------------");
 					  }
 			}
 			catch(IOException e){
 				   System.out.println("Error, could not open the file!");
-			   }			
-			System.out.println("Final inventories: ");
-			printInventories(NewYork, Miami, LosAngeles, Houston, Chicago);
-
-			
+			   }				
 		}
 }

@@ -13,7 +13,6 @@ public class record {
 	}
 	
 	public record(String cityName) {
-		//System.out.println("Record constructor called");
 		this.indivCity = new warehouse(0,0,0);
 		this.cityName = cityName;
 	}
@@ -95,7 +94,7 @@ public class record {
 	
 	public void printSimpleSale(String city, String xyz, float price, int amount){
 		NumberFormat fmt1 = NumberFormat.getCurrencyInstance();
-		//System.out.println("Simple sale from " + city + ": Item" + xyz + " for " + fmt1.format(price) + " times " + amount + " for " + fmt1.format(price*amount));
+		System.out.println("Price of Order: " + fmt1.format(price*amount));
 	}
 	public void setPrices(float priceX, float priceY, float priceZ){
 		this.indivCity.setPriceX(priceX);
